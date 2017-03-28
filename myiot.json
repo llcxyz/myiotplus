@@ -1,0 +1,145 @@
+{
+  "iotcc_username": "hhxj",
+  "iotcc_server":  "127.0.0.1",
+  "transport": {"type": "zmq", "pub_url": "tcp://127.0.0.1:19020", "sub_url": "tcp://127.0.0.1:19021"},
+  "join_cloud": false,
+  "gateways":[{
+    "id": "sealion",
+    "name": "系统",
+    "sensors": [{
+        "id": "erpv3",
+        "type":"ErpSensor",
+        "args": {"db": "demo.xunjiexidi.com", "url": "http://127.0.0.1:10003", "username": "admin", "password": "admin"},
+        "name": "Erp运行指标采集",
+        "metrics":[
+          {"item": "ws.sorting.speed", "type":"int","interval": 5000, "change_update":true},
+          {"item": "today_sale_order_cnt", "type":"int","interval": 5000, "change_update":true}
+        ]
+      },
+      {
+        "id": "opc1",
+        "type": "OpcSensor",
+        "args": {"name": "myopc", "refresh": 1000, "host": "192.168.0.25", "username": "admin", "password": "admin", "clsId": "aa6c2a7c-f097-4be3-9153-f44ce2a3d916", "domain": ""},
+        "name": "OPC数据采集",
+        "metrics": [{
+          "namespace":"cbw", "item": "DrunAngle", "type":"int", "interval": 1000,"change_update":false
+        },
+          {
+            "namespace":"cbw", "item": "WashCompData", "type":"ClothDataStruct[13]", "interval": 1000,"change_update":false
+          },
+
+          {
+            "namespace":"PB", "item": "SortingData", "type":"ClothDataStruct[10]", "interval": 1000,"change_update":false
+          },
+          {
+            "namespace":"PB", "item": "FgWeightOk", "type":"boolean[]", "interval": 1000,"change_update":false
+          },
+
+          {
+            "namespace":"SEP", "item": "oil_pressure_current", "type":"uint16", "interval": 1000,"change_update":false
+          },
+
+          {
+            "namespace":"cbw", "item": "CompartmentWaterUseData", "name": "新水使用量",  "type":"uint32[]"
+          },
+
+          {
+            "namespace": "cbw", "item": "SoapTotalData","name": "皂液使用量", "type": "uint32[]"
+          },
+          {
+            "namespace": "cbw", "item": "AlarmNumber","name": "告警", "type": "uint16"
+          },
+
+          {
+            "namespace": "cbw", "item": "CurCycleTime","name": "逝去时间", "type": "uint16"
+          },
+
+          {
+            "namespace": "cbw", "item": "WorkWashTime","name": "工作时间", "type": "uint16"
+          },
+
+          {
+            "namespace": "cbw", "item": "SystemStatus","name": "自动运行", "type": "uint8"
+          },
+          {
+            "namespace": "cbw", "item": "LongWashData","name": "长期运行数据", "type": "LongWashData"
+          }
+
+        ]
+      }
+    ],
+
+    "type_defs": [{
+      "name": "ClothDataStruct",
+      "fields": [
+          {
+            "name":"ProgNum",
+            "type":"uint16"
+          },
+          {
+            "name": "UserID",
+            "type": "uint16"
+          }
+
+      ]
+    },
+      {
+      "name": "DryMachineInfo",
+      "fields": [
+        {
+          "name":"UserID",
+          "type": "uint16"
+        }
+    },
+      {
+        "name": "LongWashData",
+        "fields": [
+          {
+            "name": "TotalRunTime",
+            "type": "uint32"
+          },
+          {
+            "name": "TotalStopTime",
+            "type": "uint32"
+          },
+          {
+            "name": "TotalErrorTime",
+            "type": "uint32"
+          },
+          {
+            "name": "TotalWashTimes",
+            "type": "uint32"
+          },
+          {
+            "name": "TotalWashWeight",
+            "type": "uint32"
+          },
+          {
+            "name": "TotalUseWater",
+            "type": "uint32"
+          }
+
+        ]
+      },
+      {
+
+        "name": "WashDataStruct",
+
+        "fields":[
+          {
+            "name": "WashTimes",
+            "type": "uint32"
+          },
+
+          {
+            "name": "WashWeight",
+            "type": "uint32"
+          }
+
+        ]
+      }
+      ]
+
+  }]
+
+}
